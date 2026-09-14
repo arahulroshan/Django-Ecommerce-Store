@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register - My Ecommerce Store</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <div class="auth-container">
+
+        <h1>🛒 Create Account</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {{ form.username.label_tag }}
+            {{ form.username }}
+            
+            {% if form.username.errors %}
+                <p style="color:red;">
+                    {{ form.username.errors }}
+                </p>
+            {% endif %}
+
+
+            {{ form.password1.label_tag }}
+            {{ form.password1 }}
+
+            {% if form.password1.errors %}
+                <p style="color:red;">
+                    {{ form.password1.errors }}
+                </p>
+            {% endif %}
+
+
+            {{ form.password2.label_tag }}
+            {{ form.password2 }}
+
+            {% if form.password2.errors %}
+                <p style="color:red;">
+                    {{ form.password2.errors }}
+                </p>
+            {% endif %}
+
+
+            <button type="submit">
+                Register
+            </button>
+
+        </form>
+
+        <p>
+            Already have an account?
+            <a href="{% url 'login' %}">
+                Login
+            </a>
+        </p>
+
+        <a href="/">
+            ← Back to Store
+        </a>
+
+    </div>
+
+</body>
+</html>

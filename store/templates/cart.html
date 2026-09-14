@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Shopping Cart</title>
+
+    {% load static %}
+
+    <link rel="stylesheet"
+          href="{% static 'css/style.css' %}">
+
+</head>
+
+<body>
+
+    <h1>🛒 Shopping Cart</h1>
+
+    <div class="cart-container">
+
+        {% if cart_items %}
+
+            {% for item in cart_items %}
+
+                <div class="cart-item">
+
+                    <h2>
+                        {{ item.product.name }}
+                    </h2>
+
+                    <p class="price">
+                        Price: ₹{{ item.product.price }}
+                    </p>
+
+                    <div class="quantity">
+
+                        <span>Quantity:</span>
+
+                        <a href="{% url 'decrease_quantity' item.product.id %}">
+                            ➖
+                        </a>
+
+                        <strong>
+                            {{ item.quantity }}
+                        </strong>
+
+                        <a href="{% url 'increase_quantity' item.product.id %}">
+                            ➕
+                        </a>
+
+                    </div>
+
+                    <p class="price">
+                        Item Total: ₹{{ item.item_total }}
+                    </p>
+
+                    <a class="remove"
+                       href="{% url 'remove_from_cart' item.product.id %}">
+                        ❌ Remove
+                    </a>
+
+                </div>
+
+            {% endfor %}
+
+            <div class="total">
+
+                Total Price:
+                ₹{{ total_price }}
+
+            </div>
+
+            <br>
+
+            <a class="checkout-button"
+               href="{% url 'checkout' %}">
+                💳 Proceed to Checkout
+            </a>
+
+        {% else %}
+
+            <div class="cart-item">
+
+                <h2>
+                    Your cart is empty.
+                </h2>
+
+                <p>
+                    Add some products to your cart.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+        <br>
+
+        <a class="continue"
+           href="{% url 'home' %}">
+            ← Continue Shopping
+        </a>
+
+    </div>
+
+</body>
+</html>

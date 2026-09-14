@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout - My Ecommerce Store</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <h1>🛒 Checkout</h1>
+
+    <div class="cart-container">
+
+        {% if cart_items %}
+
+            {% for item in cart_items %}
+
+                <div class="cart-item">
+
+                    <h2>{{ item.product.name }}</h2>
+
+                    <p class="price">
+                        Price: ₹{{ item.product.price }}
+                    </p>
+
+                    <p>
+                        Quantity: {{ item.quantity }}
+                    </p>
+
+                    <p class="price">
+                        Item Total: ₹{{ item.item_total }}
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+            <div class="total">
+                Total Price: ₹{{ total_price }}
+            </div>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <button type="submit">
+                    ✅ Place Order
+                </button>
+            </form>
+
+        {% else %}
+
+            <div class="cart-item">
+                <h2>Your cart is empty.</h2>
+            </div>
+
+        {% endif %}
+
+        <br>
+
+        <a class="continue" href="{% url 'cart' %}">
+            ← Back to Cart
+        </a>
+
+    </div>
+
+</body>
+</html>

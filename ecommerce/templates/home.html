@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Ecommerce Store</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <header class="store-header">
+        <h1>🛒 Welcome to My Ecommerce Store</h1>
+
+        <a class="cart-button" href="{% url 'cart' %}">
+            🛒 View Cart
+        </a>
+    </header>
+
+    <div class="home-container">
+
+        <h2>Our Products</h2>
+
+        <div class="product-grid">
+
+            {% for product in products %}
+
+                <div class="product-card">
+
+                    <h3>{{ product.name }}</h3>
+
+
+                    <!-- Product Image -->
+
+                    {% if product.name == "Laptop" %}
+
+                        <img src="{% static 'images/lAPTOP.jpg' %}"
+                             alt="Laptop"
+                             class="product-image">
+
+                    {% elif product.name == "Wireless Headphones" %}
+
+                        <img src="{% static 'images/headphns.jpeg' %}"
+                             alt="Wireless Headphones"
+                             class="product-image">
+
+                    {% elif product.name == "Mechanical Keyboard" %}
+
+                        <img src="{% static 'images/83-keys-keyboard-black-596669.webp' %}"
+                             alt="Mechanical Keyboard"
+                             class="product-image">
+
+                    {% elif product.name == "Mouse" %}
+
+                        <img src="{% static 'images/mouse.jpeg' %}"
+                             alt="Mouse"
+                             class="product-image">
+
+                    {% endif %}
+
+
+                    <p>
+                        {{ product.description }}
+                    </p>
+
+                    <p class="product-price">
+                        ₹{{ product.price }}
+                    </p>
+
+                    <p class="stock">
+                        Stock: {{ product.stock }}
+                    </p>
+
+
+                    <div class="product-buttons">
+
+                        <a class="details-button"
+                           href="{% url 'product_detail' product.id %}">
+                            👀 View Details
+                        </a>
+
+                        <a class="add-button"
+                           href="{% url 'add_to_cart' product.id %}">
+                            🛒 Add to Cart
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% empty %}
+
+                <p>No products available.</p>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</body>
+</html>

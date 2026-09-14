@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>My E-commerce Store</title>
+
+    {% load static %}
+
+    <link rel="stylesheet"
+          href="{% static 'css/style.css' %}">
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <div class="store-header">
+
+        <h1>🛍️ My E-commerce Store</h1>
+
+        <div class="user-navigation">
+
+            {% if user.is_authenticated %}
+
+                <span>
+                    Welcome, {{ user.username }}!
+                </span>
+
+                <a class="nav-button"
+                   href="{% url 'my_orders' %}">
+                    📦 My Orders
+                </a>
+
+                <a class="nav-button"
+                   href="{% url 'logout' %}">
+                    🚪 Logout
+                </a>
+
+            {% else %}
+
+                <a class="nav-button"
+                   href="{% url 'login' %}">
+                    🔐 Login
+                </a>
+
+                <a class="nav-button"
+                   href="{% url 'register' %}">
+                    📝 Register
+                </a>
+
+            {% endif %}
+
+            <a class="cart-button"
+               href="{% url 'cart' %}">
+                🛒 Cart
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- PRODUCTS -->
+
+    <div class="home-container">
+
+        <h2>Our Products</h2>
+
+        <div class="product-grid">
+
+            {% for product in products %}
+
+                <div class="product-card">
+
+                    {% if product.image %}
+
+                        <img
+                            src="{{ product.image }}"
+                            alt="{{ product.name }}"
+                            class="product-image"
+                        >
+
+                    {% endif %}
+
+
+                    <h3>
+                        {{ product.name }}
+                    </h3>
+
+
+                    <p>
+                        {{ product.description }}
+                    </p>
+
+
+                    <p class="product-price">
+                        ₹{{ product.price }}
+                    </p>
+
+
+                    <p class="stock">
+                        Stock: {{ product.stock }}
+                    </p>
+
+
+                    <div class="product-buttons">
+
+                        <a
+                            class="details-button"
+                            href="{% url 'product_detail' product.id %}">
+                            👀 View Details
+                        </a>
+
+
+                        <a
+                            class="add-button"
+                            href="{% url 'add_to_cart' product.id %}">
+                            🛒 Add to Cart
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% empty %}
+
+                <div class="cart-item">
+
+                    <h2>
+                        No products available.
+                    </h2>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</body>
+</html>
