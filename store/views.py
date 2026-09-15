@@ -253,7 +253,21 @@ def order_success(request, order_id):
         {'order': order}
     )
 
+# CANCEL ORDER
+def cancel_order(request, order_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
 
+    order = Order.objects.get(
+        id=order_id,
+        user=request.user
+    )
+
+    if order.status == 'Pending':
+        order.status = 'Cancelled'
+        order.save()
+
+    return redirect('my_orders')
 # MY ORDERS
 def my_orders(request):
     if not request.user.is_authenticated:
